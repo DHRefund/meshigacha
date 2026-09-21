@@ -547,6 +547,10 @@ export function CaseAppContent({ initialLanguage = 'ja', initialIntroSeen = fals
           </h1>
         </div>
 
+        {/* 1.2. Global Live Counter Banner */}
+        <div className="flex justify-center my-3">
+          <GlobalCounter count={globalCount} language={language} compact />
+        </div>
 
         {/* 1.5. Live NPC Assistant Comment Box */}
         <CaptainAvatar bark={bark} language={language} />

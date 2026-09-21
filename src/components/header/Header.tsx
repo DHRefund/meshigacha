@@ -16,7 +16,6 @@ import {
 import type { Language } from '@/lib/i18n';
 import { copy } from '@/lib/i18n';
 import { useAuth } from '@/context/AuthContext';
-import { GlobalCounter } from '@/components/global-counter/GlobalCounter';
 
 interface HeaderProps {
   language: Language;
@@ -86,11 +85,6 @@ export function Header({
           </div>
         </div>
       </a>
-
-      {/* Prominent Center Live Counter Banner */}
-      <div className="absolute left-1/2 -translate-x-1/2 hidden md:flex items-center justify-center z-10">
-        <GlobalCounter count={globalCount} language={language} compact />
-      </div>
 
       <div className="header-actions flex items-center gap-1.5 sm:gap-3 z-10 shrink-0">
         {/* Unified Sleek Action Toolbar */}
