@@ -529,19 +529,19 @@ export function CaseAppContent({ initialLanguage = 'ja', initialIntroSeen = fals
           </p>
         )}
 
-        <div className="intro">
-          <h1>
+        <div className="intro text-center flex flex-col items-center justify-center px-4 w-full mx-auto my-2">
+          <h1 className="text-center text-xl sm:text-2xl md:text-3xl font-extrabold tracking-wide text-slate-100 leading-snug sm:leading-normal">
             {language === 'ja' ? (
               <>
-                「今日何食べる？」<em>迷ったら、回せ！</em>
+                「今日何食べる？」<em className="not-italic text-[#dfc681] drop-shadow-[0_0_12px_rgba(223,198,129,0.4)] sm:ml-1 block sm:inline">迷ったら、回せ！</em>
               </>
             ) : language === 'vi' ? (
               <>
-                Hôm nay ăn gì? <em>Phân vân thì QUAY NGAY!</em>
+                Hôm nay ăn gì? <em className="not-italic text-[#dfc681] drop-shadow-[0_0_12px_rgba(223,198,129,0.4)] sm:ml-1 block sm:inline">Phân vân thì QUAY NGAY!</em>
               </>
             ) : (
               <>
-                What to eat today? <em>When in doubt, SPIN!</em>
+                What to eat today? <em className="not-italic text-[#dfc681] drop-shadow-[0_0_12px_rgba(223,198,129,0.4)] sm:ml-1 block sm:inline">When in doubt, SPIN!</em>
               </>
             )}
           </h1>
