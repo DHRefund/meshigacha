@@ -1,0 +1,457 @@
+import type { Food } from "./foods";
+
+export type Language = "vi" | "en" | "ja";
+
+export const copy = {
+  vi: {
+    tiers: ["BÌNH DÂN", "PHỔ THÔNG", "CAO CẤP", "THƯỢNG HẠNG", "★ ĐẶC SẢN VIP"],
+    title: "Hôm Nay Ăn Gì? Phân Vân Thì QUAY NGAY!",
+    counterPrefix: "Đã ghi nhận",
+    counterSuffix: "hòm",
+    counterTitle: "Lượt quay hoàn tất được ghi nhận trên website này",
+    caseLabel: "Mở hòm món ngon",
+    soundOn: "Âm thanh bật",
+    soundOff: "Âm thanh tắt",
+    turnSoundOff: "Tắt âm thanh",
+    turnSoundOn: "Bật âm thanh",
+    github: "Mở mã nguồn trên GitHub",
+    starsPending: "chưa tải",
+    language: "Ngôn ngữ",
+    spend: "Mức chi trung bình",
+    custom: "Tuỳ chỉnh",
+    customSpend: "Mức chi tuỳ chỉnh (nghìn đồng)",
+    thousandPerMeal: "nghìn / bữa",
+    spendError: "Nhập từ 30 đến 180 nghìn.",
+    vegetarianPool: "Pool hiện tại: trung bình",
+    vegetarianOnly: "Chỉ ăn chay",
+    vegetarian: "Ăn chay",
+    opening: "ĐANG MỞ HÒM…",
+    openAgain: "MỞ LẠI",
+    open: "MỞ HÒM",
+    newItem: "VẬT PHẨM MỚI",
+    referencePrice: "Giá tham khảo",
+    perPerson: "/ người",
+    find: "TÌM QUÁN",
+    continue: "TIẾP TỤC",
+    nearby: "gần đây",
+    whatsInside: "TRONG HÒM CÓ GÌ?",
+    items: "Vật phẩm trong hòm",
+    mystery: "★ MÓN BÍ ẨN",
+    mysteryAlt: "Món bí ẩn hạng vàng",
+    footer: "Fan-made · SFX: Valve /",
+    lunchDish: "Món ngon",
+    vegetarianDish: "Chay",
+  },
+  en: {
+    tiers: ["CASUAL", "POPULAR", "PREMIUM", "DELUXE", "★ VIP SIGNATURE"],
+    title: "What To Eat Today? When In Doubt, SPIN!",
+    counterPrefix: "Recorded",
+    counterSuffix: "cases",
+    counterTitle: "Completed spins recorded on this website",
+    caseLabel: "Open a gourmet case",
+    soundOn: "Sound on",
+    soundOff: "Sound off",
+    turnSoundOff: "Mute sound",
+    turnSoundOn: "Enable sound",
+    github: "Open source on GitHub",
+    starsPending: "not loaded",
+    language: "Language",
+    spend: "Average meal spend",
+    custom: "Custom",
+    customSpend: "Custom spend (thousand VND)",
+    thousandPerMeal: "thousand VND / meal",
+    spendError: "Enter 30–180 thousand VND.",
+    vegetarianPool: "Current pool average",
+    vegetarianOnly: "Vegetarian only",
+    vegetarian: "Vegetarian",
+    opening: "OPENING CASE…",
+    openAgain: "OPEN AGAIN",
+    open: "OPEN CASE",
+    newItem: "NEW ITEM",
+    referencePrice: "Typical price",
+    perPerson: "/ person",
+    find: "FIND NEARBY",
+    continue: "CONTINUE",
+    nearby: "near me",
+    whatsInside: "WHAT'S IN THE CASE?",
+    items: "Items in this case",
+    mystery: "★ MYSTERY DISH",
+    mysteryAlt: "Gold-tier mystery dish",
+    footer: "Fan-made · SFX: Valve /",
+    lunchDish: "Gourmet dish",
+    vegetarianDish: "Vegetarian",
+  },
+  ja: {
+    tiers: ["定番・庶民派", "人気メニュー", "高級・贅沢", "極上・名物", "★ VIP・特別メニュー"],
+    title: "「今日何食べる？」迷ったら、回せ！",
+    counterPrefix: "累計",
+    counterSuffix: "回開封",
+    counterTitle: "本サイトで記録されたガチャの総開封回数",
+    caseLabel: "グルメケースを開ける",
+    soundOn: "サウンド ON",
+    soundOff: "サウンド OFF",
+    turnSoundOff: "ミュート",
+    turnSoundOn: "サウンドを有効化",
+    github: "GitHubでソースコードを見る",
+    starsPending: "未読み込み",
+    language: "言語設定",
+    spend: "お食事の平均予算",
+    custom: "カスタム",
+    customSpend: "カスタム予算 (100円単位)",
+    thousandPerMeal: "0円 / 1食",
+    spendError: "300円〜1800円の範囲で入力してください。",
+    vegetarianPool: "現在のプール",
+    vegetarianOnly: "ベジタリアンのみ",
+    vegetarian: "精進料理 / ベジタリアン",
+    opening: "ケース開封中…",
+    openAgain: "もう一度引く",
+    open: "ケースを開ける",
+    newItem: "✨ ドロップアイテム！",
+    referencePrice: "参考価格",
+    perPerson: "/ 1人前",
+    find: "近くのお店を探す",
+    continue: "次へ進む",
+    nearby: "近くの店舗",
+    whatsInside: "ケースの中身一覧",
+    items: "ケース内アイテム",
+    mystery: "★ シークレット",
+    mysteryAlt: "★ ゴールドレアアイテム",
+    footer: "Fan-made · SFX: Valve /",
+    lunchDish: "絶品グルメ",
+    vegetarianDish: "精進料理",
+  },
+} as const;
+
+export const mainJaData: Record<number, { name: string; sub: string; quip: string }> = {
+  0: { name: "とんかつ", sub: "Tonkatsu • 日本", quip: "サクサク食感！揚げたてジューシー豚カツ。" },
+  1: { name: "醤油ラーメン", sub: "Shoyu Ramen • 東京", quip: "深みのある醤油スープが五臓六腑に染み渡る。" },
+  2: { name: "牛丼", sub: "Gyudon • 日本", quip: "旨味たっぷりの牛肉とつゆだくご飯の黄金コンビ。" },
+  3: { name: "照り焼きチキン丼", sub: "Teriyaki • 日本", quip: "甘辛い照り焼きタレが食欲をそそる逸品。" },
+  4: { name: "カツ丼", sub: "Katsudon • 日本", quip: "出汁の効いた卵でとじたサクサクのカツ丼。" },
+  5: { name: "鰻重", sub: "Unagi • 日本", quip: "香ばしく焼き上げた秘伝タレの絶品うなぎ。" },
+  6: { name: "豚骨ラーメン", sub: "Tonkotsu • 九州", quip: "まろやかで濃厚な極上博多豚骨スープ。" },
+  7: { name: "ライスカレー", sub: "Curry • 日本", quip: "じっくり煮込んだコク旨和風カレー。" },
+  8: { name: "天丼", sub: "Tempura • 日本", quip: "サクサク天ぷらに甘辛タレが染み渡る極上天丼。" },
+  9: { name: "天ぷらうどん", sub: "Udon • 日本", quip: "もちもちうどんとサクサク海老天の極上コラボ。" },
+  10: { name: "鮭の照り焼き丼", sub: "Salmon Teriyaki • 日本", quip: "脂の乗ったサーモンを贅沢に照り焼きに。" },
+  11: { name: "親子丼", sub: "Oyakodon • 日本", quip: "とろっとろ半熟卵と柔らか鶏肉の優しい味わい。" },
+  12: { name: "味噌ラーメン", sub: "Miso Ramen • 札幌", quip: "コク深い札幌味噌スープと太縮れ麺のハーモニー。" },
+  13: { name: "焼きそば", sub: "Yakisoba • 日本", quip: "香ばしいソースの香りがたまらない屋台焼きそば。" },
+  14: { name: "唐揚げ丼", sub: "Karaage Don • 日本", quip: "カリッとジューシーなから揚げにマヨネーズが最高。" },
+  15: { name: "つけ麺", sub: "Tsukemen • 東京", quip: "濃厚な旨味スープに絡める極太つけ麺。" },
+  16: { name: "鮭いくら丼", sub: "Ikura Don • 北海道", quip: "プチプチいくらと新鮮サーモンの贅沢海鮮丼。" },
+  17: { name: "すき焼き丼", sub: "Sukiyaki • 日本", quip: "甘辛い割り下が染み込んだ柔らか牛肉のすき焼き。" },
+  18: { name: "海老天うどん", sub: "Ebi Udon • 日本", quip: "大きなぷりぷり海老天がのった出汁旨うどん。" },
+  19: { name: "豚の生姜焼き丼", sub: "Shogayaki • 日本", quip: "生姜の香ばしさとタレがご飯に絡む絶品生姜焼き。" },
+  20: { name: "チラシ寿司", sub: "Chirashi • 日本", quip: "海の幸が鮮やかに咲き誇る豪華チラシ寿司。" },
+  21: { name: "焼肉丼", sub: "Yakiniku • 日本", quip: "香ばしく炭火で焼き上げたジューシーな焼肉丼。" },
+  22: { name: "冷やし中華", sub: "Hiyashi Chuka • 日本", quip: "清涼感あふれる爽やかな冷やし中華。" },
+  23: { name: "カレーカツうどん", sub: "Curry Udon • 日本", quip: "濃厚カレーとサクサクカツの夢のうどん。" },
+  24: { name: "握り寿司セット", sub: "Nigiri Sushi • 日本", quip: "極上の旬ネタを堪能できる贅沢な握り寿司セット。" },
+  25: { name: "鯖の塩焼き定食", sub: "Saba Teishoku • 日本", quip: "脂がのったサバを香ばしく塩焼きに。" },
+  26: { name: "ハンバーグ定食", sub: "Hamburg • 日本", quip: "肉汁あふれるデミグラスハンバーグ定食。" },
+  27: { name: "たこ焼き", sub: "Takoyaki • 大阪", quip: "外はカリッ、中はとろ～り大阪名物たこ焼き。" },
+  28: { name: "お好み焼き", sub: "Okonomiyaki • 大阪", quip: "キャベツたっぷり、ソースとマヨが躍るお好み焼き。" },
+  29: { name: "チキンカツカレー", sub: "Chicken Katsu • 日本", quip: "ボリューミーなチキンカツと濃密カレーの満足セット。" },
+  30: { name: "長崎ちゃんぽん", sub: "Champon • 長崎", quip: "具だくさんの野菜と海鮮の旨味が詰まったちゃんぽん。" },
+  31: { name: "海鮮丼", sub: "Kaisen Don • 日本", quip: "海鮮の王様ウニといくらが輝く豪華海鮮丼。" },
+  32: { name: "味噌カツ丼", sub: "Miso Katsu • 名古屋", quip: "濃厚赤味噌タレが染み込む名古屋名物味噌カツ。" },
+  33: { name: "鮭の塩焼き定食", sub: "Salmon Teishoku • 日本", quip: "ふっくら香ばしく焼き上げたサーモン塩焼き。" },
+  34: { name: "チキン南蛮丼", sub: "Chicken Namban • 宮崎", quip: "タルタルソースたっぷりの極上チキン南蛮。" },
+  35: { name: "ざるそば", sub: "Zaru Soba • 日本", quip: "のどごし爽やか、清涼感たっぷりのざるそば。" },
+  36: { name: "バターコーン味噌ラーメン", sub: "Miso Ramen • 札幌", quip: "香ばしいバターとコーンが溶け出す味噌ラーメン。" },
+  37: { name: "牛カツ", sub: "Gyu-Katsu • 日本", quip: "レアに揚げた牛肉を石焼きで楽しむ極上牛カツ。" },
+  38: { name: "十勝豚丼", sub: "Butadon • 十勝", quip: "甘辛タレが香ばしい十勝名物の豚丼。" },
+  39: { name: "オムライス", sub: "Omurice • 日本", quip: "とろとろ半熟卵のドレスを纏ったオムライス。" },
+  40: { name: "チャーシュー丼", sub: "Chashudon • 日本", quip: "香ばしく焼き上げた絶品チャーシューがご飯に溢れる。" },
+  41: { name: "そぼろ丼", sub: "Soboro Don • 日本", quip: "色鮮やかな鶏そぼろとふわふわ卵の2色丼。" },
+  42: { name: "担々麺", sub: "Tantanmen • 日本", quip: "胡麻の風味とピリ辛スープがクセになる担々麺。" },
+  43: { name: "讃岐うどん", sub: "Sanuki Udon • 香川", quip: "コシのある麺と出汁が際立つ讃岐うどん。" },
+  44: { name: "かき揚げそば", sub: "Kakiage Soba • 日本", quip: "サクサクのかき揚げが出汁に溶け込む蕎麦。" },
+  45: { name: "鰻重", sub: "Unaju • 日本", quip: "伝統の重箱に敷き詰められた最高級うな重。" },
+  46: { name: "ブリカマ塩焼き", sub: "Hamachi Kama • 日本", quip: "脂が乗り切ったブリカマの塩焼き。" },
+  47: { name: "ハヤシライス", sub: "Hayashi Rice • 日本", quip: "牛肉と玉ねぎをじっくり煮込んだハヤシライス。" },
+  48: { name: "油そば", sub: "Abura Soba • 東京", quip: "特製タレとラー油を絡めて食べる汁なし油そば。" },
+  49: { name: "角煮丼", sub: "Kakuni Don • 日本", quip: "じっくり煮込んだトロトロ豚角煮丼。" },
+  50: { name: "チキンカツ丼", sub: "Chicken Katsudon • 日本", quip: "サクサクのチキンカツをふんわり卵でとじた逸品。" },
+  51: { name: "鉄火丼", sub: "Tekka Don • 日本", quip: "赤身の旨味が際立つ新鮮マグロの鉄火丼。" },
+  52: { name: "鍋焼きうどん", sub: "Nabeyaki Udon • 日本", quip: "アツアツの土鍋で煮込んだ具だくさん鍋焼きうどん。" },
+  53: { name: "チーズカツカレー", sub: "Cheese Katsu • 日本", quip: "とろ～りチーズが溢れ出るチーズカツカレー。" },
+  54: { name: "和牛丼", sub: "Wagyu Don • 日本", quip: "和牛の旨味が口いっぱいに広がる極上和牛丼。" },
+  55: { name: "きつねうどん", sub: "Kitsune Udon • 日本", quip: "お出汁をたっぷり吸ったお揚げのきつねうどん。" },
+  56: { name: "カレーうどん", sub: "Curry Udon • 日本", quip: "出汁の効いたトロトロカレーがうどんに絡む。" },
+  57: { name: "マグロ山かけ丼", sub: "Yamakake Don • 日本", quip: "新鮮マグロととろろのヘルシーで絶品な丼。" },
+  58: { name: "メンチカツ丼", sub: "Menchi Katsu • 日本", quip: "肉汁あふれるメンチカツをご飯とともに。" },
+  59: { name: "エビフライカレー", sub: "Ebi Fry Curry • 日本", quip: "大きなエビフライがドンとのったカレー。" },
+  60: { name: "焼き鳥丼", sub: "Yakitori • 日本", quip: "香ばしいタレが絡む炭火焼き鳥丼。" },
+  61: { name: "塩ラーメン", sub: "Shio Ramen • 日本", quip: "透明感あふれるスープの澄んだ塩ラーメン。" },
+  62: { name: "餃子定食", sub: "Gyoza • 日本", quip: "パリッと焼き上げたジューシーな餃子定食。" },
+  63: { name: "鮭のバター焼き", sub: "Salmon Butter • 日本", quip: "バター醤油の香ばしさがたまらない鮭のムニエル。" },
+  64: { name: "スタミナ丼", sub: "Stamina Don • 日本", quip: "ニンニクの効いた肉炒めでスタミナ満点。" },
+  65: { name: "あさりうどん", sub: "Asari Udon • 日本", quip: "あさりの出汁がしっかり出た優しいうどん。" },
+  66: { name: "トロサーモン丼", sub: "Toro Salmon • 日本", quip: "脂の乗ったトロサーモンが口の中でとろける丼。" },
+  67: { name: "黒ガーリック豚骨ラーメン", sub: "Black Garlic • 日本", quip: "香ばしい黒マー油が効いた濃厚豚骨ラーメン。" },
+  68: { name: "カニクリームコロッケ", sub: "Crab Croquette • 日本", quip: "カニの旨味が詰まったトロトロクリームコロッケ。" },
+  69: { name: "タレカツ丼", sub: "Tare Katsudon • 新潟", quip: "秘伝タレにくぐらせた新潟名物タレカツ丼。" },
+  70: { name: "ホッケの塩焼き定食", sub: "Hokke Shioyaki • 北海道", quip: "北海道産のホッケを豪快に塩焼きで。" },
+  71: { name: "激辛海鮮ラーメン", sub: "Spicy Ramen • 日本", quip: "旨辛スープと海鮮の旨味が口の中で弾けるラーメン。" },
+  72: { name: "黒カレー", sub: "Black Curry • 日本", quip: "イカ墨のコクが深いスパイシーな黒カレー。" },
+  73: { name: "ネギトロ丼", sub: "Negitoro Don • 日本", quip: "まぐろのたたきとネギの相性が抜群のネギトロ丼。" },
+  74: { name: "天ざるそば", sub: "Ten-Zaru Soba • 日本", quip: "サクサク天ぷらと冷たいざるそばのセット。" },
+  75: { name: "チャーシュー味噌ラーメン", sub: "Chashu Miso • 日本", quip: "大判チャーシューが丼を覆い尽くす味噌ラーメン。" },
+  76: { name: "焼肉弁当", sub: "Yakiniku Bento • 日本", quip: "高級和牛の焼肉を詰め込んだ豪華弁当。" },
+  77: { name: "麻婆豆腐丼", sub: "Mapo Tofu • 日本", quip: "程よいシビ辛さが癖になる麻婆豆腐丼。" },
+  78: { name: "月見うどん", sub: "Tsukimi Udon • 日本", quip: "月見卵が出汁にまろやかさを加える月見うどん。" },
+  79: { name: "サーモンチーズカツ", sub: "Salmon Cheese • 日本", quip: "サーモンととろけるチーズの黄金フライ。" },
+  80: { name: "カツカレーうどん", sub: "Katsu Curry Udon • 日本", quip: "カツとカレーとうどんが合体したボリューム満点麺。" },
+  81: { name: "ウナギロール", sub: "Unagi Roll • 日本", quip: "うなぎとアボカドを巻いた贅沢なロール寿司。" },
+  82: { name: "牛すじカレー", sub: "Beef Tendon Curry • 日本", quip: "じっくりトロトロに煮込んだ牛すじカレー。" },
+  83: { name: "唐揚げ定食", sub: "Karaage Teishoku • 日本", quip: "ジューシーなから揚げがゴロゴロ入った満足定食。" },
+  84: { name: "銀ダラの西京焼き定食", sub: "Saikyo Cod • 京都", quip: "西京味噌の甘みが染み込んだ高級銀ダラ焼き。" },
+  85: { name: "海鮮お茶漬け", sub: "Ochazuke • 日本", quip: "香ばしいお出汁をかけていただく海鮮お茶漬け。" },
+  86: { name: "辛味噌豚骨ラーメン", sub: "Spicy Tonkotsu • 日本", quip: "特製辛味噌が豚骨スープのコクを引き立てる。" },
+  87: { name: "豚キムチ丼", sub: "Pork Kimchi • 日本", quip: "豚肉とキムチの旨辛炒めが食欲を刺激する。" },
+  88: { name: "エビカツ丼", sub: "Ebi Katsudon • 日本", quip: "ぷりぷりエビカツを卵でふんわりとじた丼。" },
+  89: { name: "鴨そば", sub: "Kamo Soba • 日本", quip: "鴨肉の旨味とネギの甘みが溶け出す温蕎麦。" },
+  90: { name: "ハンバーグカレー", sub: "Hamburg Curry • 日本", quip: "ふっくらハンバーグがのった贅沢カレーライス。" },
+  91: { name: "焼きうどん", sub: "Yaki Udon • 日本", quip: "香ばしい醤油ソースで炒めた鉄板焼きうどん。" },
+  92: { name: "サーモンアボカド丼", sub: "Salmon Avocado • 日本", quip: "濃厚サーモンと新鮮アボカドの最強コンビ丼。" },
+  93: { name: "手羽先丼", sub: "Tebasaki • 名古屋", quip: "甘辛スパイシーなタレが病みつきになる手羽先丼。" },
+  94: { name: "味噌ラーメン特製", sub: "Miso Special • 日本", quip: "全部乗せ贅沢仕立ての特製味噌ラーメン。" },
+  95: { name: "すき焼き重", sub: "Sukiyaki Rice • 日本", quip: "高級牛肉をたっぷり敷き詰めたすき焼き重。" },
+  96: { name: "焼きチーズカレー", sub: "Baked Curry • 日本", quip: "香ばしい焼きチーズがのった濃厚焼きカレー。" },
+  97: { name: "スパイシーサーモンロール", sub: "Spicy Salmon Roll • 日本", quip: "ピリ辛サーモンと天かすの食感が楽しいロール。" },
+  98: { name: "チャーハン", sub: "Chashu Fried Rice • 日本", quip: "パラパラに炒め上げた香ばしいチャーハン。" },
+  99: { name: "特選和牛すき焼き丼", sub: "Wagyu Sukiyaki • 日本", quip: "最高級和牛の柔らかな旨味あふれるすき焼き丼。" },
+  100: { name: "フィッシュカツ丼", sub: "Fish Katsu • 日本", quip: "宮崎県産A5和牛の極上な脂の旨味を石焼きで。" },
+  101: { name: "まぜそば", sub: "Maze Soba • 名古屋", quip: "特製タレと具材をしっかり混ぜて食べるまぜそば。" },
+  102: { name: "牛カルビ照り焼き丼", sub: "Teriyaki Ribs • 日本", quip: "甘辛タレを絡めて香ばしく焼いた牛カルビ重。" },
+  103: { name: "サーモンたたき丼", sub: "Salmon Tataki • 日本", quip: "表面を香ばしくあぶったサーモンのぽん酢丼。" },
+  104: { name: "醤油バターコーンラーメン", sub: "Shoyu Butter • 日本", quip: "香ばしい醤油スープにバターとコーンが溶け込む。" },
+  105: { name: "チキンカツオムライス", sub: "Katsu Omurice • 日本", quip: "とろとろオムライスにサクサクチキンカツをON。" },
+  106: { name: "鰻玉丼", sub: "Unagi Tama • 日本", quip: "香ばしいうなぎとふんわり玉子の贅沢コラボ丼。" },
+  107: { name: "特製長崎ちゃんぽん", sub: "Champon Deluxe • 長崎", quip: "海鮮と野菜がたっぷり入った豪華長崎ちゃんぽん。" },
+  108: { name: "特上握り寿司盛り合わせ", sub: "Deluxe Sushi • 日本", quip: "大トロ・ウニ・ウナギが入った特上握り寿司。" },
+  109: { name: "黒豚とんかつ", sub: "Kurobuta • 鹿児島", quip: "鹿児島県産黒豚のジューシーな贅沢カツ。" },
+  110: { name: "トリュフ豚骨ラーメン", sub: "Truffle Ramen • 日本", quip: "トリュフの香りが贅沢に広がる濃厚豚骨ラーメン。" },
+  111: { name: "和牛温泉卵丼", sub: "Wagyu Onsen • 日本", quip: "和牛ステーキととろーり温泉卵の贅沢丼。" },
+  112: { name: "ひつまぶし", sub: "Hitsumabushi • 名古屋", quip: "名古屋名物！3通りの食べ方で楽しむひつまぶし。" },
+  113: { name: "ロブスター天丼", sub: "Lobster Tempura • 日本", quip: "豪快なロブスターをサクサクの天ぷらに。" },
+  114: { name: "辛味噌サーモンラーメン", sub: "Spicy Salmon Ramen • 日本", quip: "ピリ辛味噌スープと香ばしいサーモンのコラボ。" },
+  115: { name: "メガチャーシュー麺", sub: "Mega Chashu • 日本", quip: "蟹の旨味が口いっぱいに広がる贅沢雑炊。" },
+  116: { name: "特選海鮮天丼", sub: "Kaisen Tendon • 日本", quip: "特大エビとカニが入った贅沢天丼。" },
+  117: { name: "牛カルビ丼", sub: "Yakiniku Ribs • 日本", quip: "ジューシーな牛カルビを香ばしく焼き上げた丼。" },
+  118: { name: "三色丼: 鮭・いくら・ウニ", sub: "Tri-Color Don • 北海道", quip: "サーモン・いくら・ウニが輝く北海道三宝丼。" },
+  119: { name: "海鮮特製ラーメン", sub: "Supreme Seafood • 日本", quip: "伊勢海老とホタテが入った至高の海鮮ラーメン。" },
+};
+
+export const drinksJaData: Record<number, { name: string; sub: string; quip: string }> = {
+  0: { name: "抹茶ラテ", sub: "Matcha • 京都", quip: "宇治抹茶のほろ苦さと濃厚ミルクの絶妙な味わい。" },
+  1: { name: "煎茶", sub: "Sencha • 日本", quip: "すっきり爽やか、涼を呼ぶ冷た～い煎茶。" },
+  2: { name: "ほうじ茶ラテ", sub: "Hojicha • 日本", quip: "香ばしい焙煎の香りとほろ苦いキャラメル風味。" },
+  3: { name: "ロイヤルミルクティー", sub: "Royal Tea • 日本", quip: "濃厚なアッサム茶葉とコクのある濃厚ミルク。" },
+  4: { name: "玄米茶", sub: "Genmaicha • 日本", quip: "香ばしい炒り米の香りが広がる伝統の玄米茶。" },
+  5: { name: "カルピスソーダ", sub: "Calpis • 日本", quip: "甘酸っぱく爽やかな、甘みあふれるカルピスソーダ。" },
+  6: { name: "柚子ソーダ", sub: "Yuzu • 高知", quip: "高知県産柚子の爽やかな香りがはじけるソーダ。" },
+  7: { name: "ラムネ", sub: "Ramune • 日本", quip: "カランと鳴るガラス玉、懐かしいラムネの味。" },
+  8: { name: "メロンソーダ", sub: "Melon Soda • 日本", quip: "緑のソーダに濃厚バニラアイスがのったメロンソーダ。" },
+  9: { name: "アイスティー", sub: "Black Tea • 日本", quip: "すっきり爽やかなレモン添えアイスティー。" },
+  10: { name: "さくらラテ", sub: "Sakura • 日本", quip: "桜の華やかな香りが広がるピンクのさくらラテ。" },
+  11: { name: "梅酒ソーダ", sub: "Umeshu • 日本", quip: "甘酸っぱい梅の風味がさわやかなソーダ割り。" },
+  12: { name: "抹茶エスプレッソ", sub: "Matcha • Kyoto", quip: "ほろ苦抹茶と濃密エスプレッソの美麗3層仕立て。" },
+  13: { name: "麦茶", sub: "Mugicha • 日本", quip: "香ばしく香る香ばしい夏のお供、麦茶。" },
+  14: { name: "甘酒", sub: "Amazake • 日本", quip: "自然な甘みとコクが広がる栄養満点の甘酒。" },
+  15: { name: "タピオカミルクティー", sub: "Royal Tea • 日本", quip: "もちもち黒糖タピオカが入った本格ミルクティー。" },
+  16: { name: "紫蘇ソーダ", sub: "Shiso • 日本", quip: "赤しその爽やかな酸味が広がる清涼ソーダ。" },
+  17: { name: "ほうじ茶", sub: "Hojicha • 日本", quip: "香ばしく煎り上げたほうじ茶のすっきりアイス。" },
+  18: { name: "玉露", sub: "Gyokuro • Uji", quip: "宇治産の高級玉露、まろやかな甘みと旨味。" },
+  19: { name: "抹茶フラペチーノ", sub: "Matcha • 日本", quip: "濃厚な宇治抹茶ホイップたっぷりのフラペチーノ。" },
+  20: { name: "さつまいもラテ", sub: "Satsumaimo • 鹿児島", quip: "鹿児島県産紫芋のやさしい甘みとコク。" },
+  21: { name: "白桃ソーダ", sub: "Peach • 岡山", quip: "岡山県産白桃の果汁があふれる贅沢ソーダ。" },
+  22: { name: "コーヒー牛乳", sub: "Coffee Milk • 日本", quip: "お風呂上がりに冷えた瓶入りコーヒー牛乳。" },
+  23: { name: "黒蜜きなこラテ", sub: "Kinako • 日本", quip: "香ばしいきな粉とコクのある黒蜜のラテ。" },
+  24: { name: "青森りんごソーダ", sub: "Apple • 青森", quip: "青森県産りんごのみずみずしい果汁ソーダ。" },
+  25: { name: "水出しコーヒー", sub: "Cold Brew • 京都", quip: "12時間じっくり抽出したまろやかな水出しコーヒー。" },
+  26: { name: "菊茶", sub: "Kiku • 日本", quip: "ほのかな菊の香りで心身ともにリラックス。" },
+  27: { name: "いちごミルク", sub: "Strawberry • 福岡", quip: "あまおう苺のフレッシュな甘酸っぱさとミルク。" },
+  28: { name: "豆乳抹茶ラテ", sub: "Soy Matcha • 日本", quip: "まろやかな豆乳と抹茶のヘルシーラテ。" },
+  29: { name: "ジンジャーエール", sub: "Ginger Ale • 日本", quip: "生姜のピリッとした辛みが効いた本格ジンジャーエール。" },
+  30: { name: "柚子茶", sub: "Yuzu • 日本", quip: "柚子ジャムとハチミツの甘酸っぱいシュワシュワ茶。" },
+  31: { name: "抹茶レモネード", sub: "Matcha • 日本", quip: "フレッシュレモンと抹茶のさわやかな新感覚ドリンク。" },
+  32: { name: "黒ごまミルク", sub: "Kurogoma • 日本", quip: "香ばしく焙煎した黒ごまの濃厚な味わい。" },
+  33: { name: "栗ミルク", sub: "Chestnut • 日本", quip: "香ばしい焼き栗の甘みが広がるほっこりミルク。" },
+  34: { name: "ブラッドオレンジソーダ", sub: "Orange • 日本", quip: "濃厚なブラッドオレンジの果汁あふれるソーダ。" },
+  35: { name: "アールグレイミルクティー", sub: "Earl Grey • 日本", quip: "高貴なベルガモットが香るアールグレイミルクティー。" },
+};
+
+export const snacksJaData: Record<number, { name: string; sub: string; quip: string }> = {
+  0: { name: "花見団子", sub: "Dango • 日本", quip: "ピンク・白・緑のおめでたい彩り豊かな三色団子。" },
+  1: { name: "みたらし団子", sub: "Dango • 日本", quip: "香ばしく焼いた団子に甘辛い醤油タレがたっぷり。" },
+  2: { name: "たい焼き", sub: "Taiyaki • 日本", quip: "焼きたてあつあつ、ほくほく小豆餡入りのたい焼き。" },
+  3: { name: "どら焼き", sub: "Dorayaki • 日本", quip: "ふんわり生地に北海道産小豆の粒餡がたっぷり。" },
+  4: { name: "いちご大福", sub: "Daifuku • 日本", quip: "甘酸っぱいジューシーな苺ともちもちお餅のコラボ。" },
+  5: { name: "抹茶ソフトクリーム", sub: "Soft Cream • 京都", quip: "濃厚な宇治抹茶の風味あふれるプレミアムソフト。" },
+  6: { name: "かき氷", sub: "Kakigori • 日本", quip: "いちごシロップと練乳がたっぷりかかったかき氷。" },
+  7: { name: "煎餅", sub: "Senbei • 日本", quip: "香ばしい醤油の香りと海苔の風味あふれる煎餅。" },
+  8: { name: "あんみつ", sub: "Anmitsu • 日本", quip: "黒蜜をかけていただく寒天と小豆の和風スイーツ。" },
+  9: { name: "北海道チーズタルト", sub: "Cheese Tart • 北海道", quip: "北海道産チーズの濃厚なコクがあふれるタルト。" },
+  10: { name: "抹茶パフェ", sub: "Parfait • 京都", quip: "抹茶アイス、白玉、小豆が重なる豪華和風パフェ。" },
+  11: { name: "プリン", sub: "Purin • 日本", quip: "ほろ苦いカラメルソースと濃厚たまごプリン。" },
+  12: { name: "モッチアイス", sub: "Mochi Ice • 日本", quip: "ひんやりアイスをもちもちのお餅で包んだスイーツ。" },
+  13: { name: "卵焼き", sub: "Tamagoyaki • 日本", quip: "出汁の旨味がじゅわっと広がる甘い玉子焼き。" },
+  14: { name: "コロッケ", sub: "Korokke • 日本", quip: "ほくほくジャガイモのサクサク極上コロッケ。" },
+  15: { name: "ポン・デ・リング", sub: "Pon-de-ring • 日本", quip: "もちもちした食感がクセになるポン・デ・リング。" },
+  16: { name: "カステラ", sub: "Castella • 長崎", quip: "長崎伝統のふんわり甘いカステラ。" },
+  17: { name: "磯辺焼き", sub: "Isobeyaki • 日本", quip: "香ばしく焼いたお餅に醤油と海苔を巻いた逸品。" },
+  18: { name: "スフレパンケーキ", sub: "Souffle • 日本", quip: "ふわふわ揺れるお口でとろけるスフレパンケーキ。" },
+  19: { name: "柚子シャーベット", sub: "Sorbet • 高知", quip: "さっぱり爽やかな柚子の果汁あふれるシャーベット。" },
+  20: { name: "蕨餅", sub: "Warabi • 日本", quip: "きな粉と黒蜜をかけていただくぷるぷるわらび餅。" },
+  21: { name: "モナカ", sub: "Monaka • 日本", quip: "サクサクの最中生地にアイスと小豆をサンド。" },
+  22: { name: "メロンパン", sub: "Melonpan • 日本", quip: "ビスケット生地がサクサク香ばしいメロンパン。" },
+  23: { name: "さつまいも大福", sub: "Daifuku • 日本", quip: "ほくほくスイートポテトを包んだお大福。" },
+  24: { name: "原宿クレープ", sub: "Crepe • 東京", quip: "原宿名物！いちごクリームたっぷりのクレープ。" },
+  25: { name: "枝豆", sub: "Edamame • 日本", quip: "塩味が効いたホクホクの茹でたて枝豆。" },
+  26: { name: "揚げ出し豆腐", sub: "Agedashi • 日本", quip: "お出汁がたっぷり染み込んだ衣サクサクの揚げ出し豆腐。" },
+  27: { name: "たこ焼き串", sub: "Takoyaki • 大阪", quip: "香ばしく焼き上げた大阪名物たこ焼き串。" },
+  28: { name: "焼きアイス", sub: "Taiyaki • 日本", quip: "パリッと焼いたたい焼きに抹茶アイスをサンド。" },
+  29: { name: "塩煎餅", sub: "Sembei • 日本", quip: "サクサク香ばしい昔ながらの塩煎餅。" },
+  30: { name: "抹茶ロールケーキ", sub: "Roll Cake • 京都", quip: "濃厚抹茶クリームを巻き込んだ贅沢ロールケーキ。" },
+  31: { name: "金つば", sub: "Kintsuba • 日本", quip: "小豆の風味が引き立つ伝統の和菓子金つば。" },
+  32: { name: "桜餅", sub: "Sakura • 日本", quip: "桜の葉の塩漬けが香る風情ある桜餅。" },
+  33: { name: "今川焼き", sub: "Imagawayaki • 日本", quip: "あつあつカスタードクリームが入った今川焼き。" },
+  34: { name: "フルーツサンド", sub: "Sando • 日本", quip: "いちごやキウイと生クリームの贅沢フルーツサンド。" },
+  35: { name: "抹茶クッキー", sub: "Cookie • 日本", quip: "ほろ苦抹茶生地にホワイトチョコがのったクッキー。" },
+};
+
+export const pubJaData: Record<number, { name: string; sub: string; quip: string }> = {
+  0: { name: "焼き鳥盛り合わせ", sub: "Yakitori • Izakaya", quip: "香ばしいタレの香りが広がる居酒屋名物焼き鳥。" },
+  1: { name: "牛タン塩焼き", sub: "Gyu-Tan • 仙台", quip: "仙台名物！塩とレモンでいただくジューシー牛タン。" },
+  2: { name: "チャーシュー", sub: "Chashu • Izakaya", quip: "香ばしくあぶった厚切り自家製チャーシュー。" },
+  3: { name: "刺身盛り合わせ", sub: "Sashimi • 日本", quip: "新鮮なマグロやサーモンがのった豪華刺身舟盛り。" },
+  4: { name: "海老の塩焼き", sub: "Ebi Grill • Izakaya", quip: "香ばしく焼き上げた丸ごと味わえる海老の塩焼き。" },
+  5: { name: "ししゃも", sub: "Shishamo • 日本", quip: "香ばしく焼いた頭から食べられるししゃも。" },
+  6: { name: "あさりのバター焼き", sub: "Asari • Izakaya", quip: "バターとガーリックの香りが広がるあさりの酒蒸し。" },
+  7: { name: "串カツ", sub: "Kushikatsu • 新世界", quip: "サクサク衣に二度漬け禁止ソースの串カツ。" },
+  8: { name: "ソフトシェルクラブ", sub: "Tempura • Izakaya", quip: "丸ごとサクサクに揚げた贅沢ソフトシェルクラブ。" },
+  9: { name: "豚キムチ", sub: "Buta Kimchi • Izakaya", quip: "豚肉の脂とキムチの辛味がベストマッチの豚キムチ。" },
+  10: { name: "揚げ出し豆腐", sub: "Agedashi • 日本", quip: "お出汁の中で衣がとろけるアツアツの揚げ出し豆腐。" },
+  11: { name: "アスパラベーコン", sub: "Kushiyaki • Izakaya", quip: "シャキシャキのアスパラに旨味ベーコンを巻いて。" },
+  12: { name: "烏賊の姿焼き", sub: "Ika Yaki • 日本", quip: "甘辛タレで屋台の香ばしさを再現したイカ姿焼き。" },
+  13: { name: "鉄板餃子", sub: "Gyoza • Izakaya", quip: "鉄板でアツアツ！皮がパリッとした羽付き餃子。" },
+  14: { name: "厚揚げ", sub: "Atsuaage • 日本", quip: "表面をカリッと香ばしく焼いた厚揚げ焼き。" },
+  15: { name: "鶏の唐揚げ", sub: "Karaage • Izakaya", quip: "ジューシーな唐揚げに甘辛タレとスパイスが絡む。" },
+  16: { name: "牛肉えのき巻き", sub: "Kushiyaki • Izakaya", quip: "旨味たっぷりの牛肉でシャキシャキえのきを巻いて。" },
+  17: { name: "鯖の味噌煮", sub: "Saba Miso • 日本", quip: "コク旨味噌でじっくり煮込んだ鯖の味噌煮。" },
+  18: { name: "枝豆", sub: "Edamame • Izakaya", quip: "ビールのお供に欠かせない茹でたて塩枝豆。" },
+  19: { name: "明太チーズポテト", sub: "Mentai • Izakaya", quip: "明太子とチーズがトロトロに溶けたポテト焼き。" },
+  20: { name: "つくね", sub: "Tsukune • Izakaya", quip: "濃厚タレ焼きつくねを新鮮な生卵につけて。" },
+  21: { name: "チーズベーコン", sub: "Kushiyaki • Izakaya", quip: "とろけるチーズをベーコンで巻いた絶品串焼き。" },
+  22: { name: "酢の物", sub: "Sunomono • 日本", quip: "さっぱりキュウリとタコの酢の物で口直し。" },
+  23: { name: "鮭のカブト焼き", sub: "Kabuto • Izakaya", quip: "脂の乗ったサーモンのカブトを豪快に塩焼きで。" },
+  24: { name: "ししとう", sub: "Shishito • Izakaya", quip: "香ばしく焼いたピリリと辛いししとう串。" },
+  25: { name: "和牛串", sub: "Wagyu • Izakaya", quip: "とろける極上和牛の贅沢な串焼き。" },
+  26: { name: "ブリカマ", sub: "Hamachi • Izakaya", quip: "脂が乗り切ったブリカマの香ばしい塩焼き。" },
+  27: { name: "鶏皮", sub: "Tori Kawa • Izakaya", quip: "カリカリに焼き上げた塩味がたまらない鶏皮串。" },
+  28: { name: "豚の角煮", sub: "Kakuni • Izakaya", quip: "お口の中でほどけるトロトロの豚角煮。" },
+  29: { name: "明太だし巻き", sub: "Dashimaki • Izakaya", quip: "ピリ辛明太子を巻き込んだ出汁巻き玉子。" },
+  30: { name: "ポテトサラダ", sub: "Salad • Izakaya", quip: "ほくほくジャガイモの濃厚居酒屋ポテトサラダ。" },
+  31: { name: "揚げニンニク", sub: "Ninniku • Izakaya", quip: "ホクホクに揚げたガーリックを味噌と一緒に。" },
+  32: { name: "焼きトウモロコシ", sub: "Corn Grill • Izakaya", quip: "醤油バターが香ばしく焦げた焼きトウモロコシ。" },
+  33: { name: "とろろ", sub: "Tororo • Izakaya", quip: "出汁の効いた粘り強いとろろにウズラ卵をのせて。" },
+  34: { name: "カニミソ", sub: "Kani Miso • Izakaya", quip: "甲羅の上で香ばしく焼いた濃厚カニミソ。" },
+  35: { name: "ミニすき焼き", sub: "Sukiyaki • Izakaya", quip: "アツアツの鉄鍋でいただく一人前すき焼き。" },
+};
+
+const legacyViNameMap: Record<string, string> = {
+  'Mì nấm chay': 'キノコ精進ラーメン',
+  'Xôi mặn': '和風おこわ',
+  'Mai cua nướng Miso Kani (Kani Miso)': 'カニミソ甲羅焼き',
+  'Mì Soba lạnh Tempura tôm (Ten-Zaru)': '天ざるそば',
+  'Mì lạnh Hiyashi Chuka (Hiyashi)': '冷やし中華',
+  'Cơm thịt chashu nướng (Chashudon)': 'チャーシュー丼',
+  'Cơm heo chiên xù Tonkatsu (Tonkatsu)': 'とんかつ定食',
+  'Mì Ramen tương Shoyu (Shoyu)': '醤油ラーメン',
+  'Cơm bò hầm Gyudon trứng chần (Gyudon)': '牛丼',
+  'Cơm gà sốt Teriyaki (Chicken)': '照り焼きチキン丼',
+  'Cơm Tonkatsu trứng Katsudon (Katsudon)': 'カツ丼',
+};
+
+const legacyViSubMap: Record<string, string> = {
+  'Chay': '精進料理 • 日本',
+  'Gà, thịt hoặc chả • Việt Nam': 'おこわ • 日本',
+  'Kani Miso • Izakaya': 'Kani Miso • 居酒屋',
+  'Ten-Zaru Soba • 日本': 'Ten-Zaru • 日本',
+  'Hiyashi Chuka • 日本': 'Hiyashi Chuka • 日本',
+  'Chashudon • 日本': 'Chashudon • 日本',
+};
+
+const legacyViQuipMap: Record<string, string> = {
+  'Gạch cua Kani Miso nướng mai thơm bùng nổ.': '甲羅の上で香ばしく焼いた濃厚カニミソ。',
+  'Soba lạnh ăn kèm dĩa Tempura tôm giòn rụm.': 'サクサク天ぷらと冷たいざるそばのセット。',
+  'Mì lạnh mùa hè mát rượi, giải nhiệt tức thì.': '清涼感あふれる爽やかな冷やし中華。',
+  'Chashu nướng xá xíu thơm phức ngập tràn tô cơm.': '香ばしく焼き上げた絶品チャーシューがご飯に溢れる。',
+  'Dẻo dai đến hết ca chiều.': 'モチモチ食感で食べ応え抜群の和風おこわ。',
+};
+
+export function foodName(food: Food, language: Language) {
+  if (language === "ja") {
+    const cat = food.category || "main";
+    if (cat === "drinks" && drinksJaData[food.image]) return drinksJaData[food.image].name;
+    if (cat === "snacks" && snacksJaData[food.image]) return snacksJaData[food.image].name;
+    if (cat === "pub" && pubJaData[food.image]) return pubJaData[food.image].name;
+    if (mainJaData[food.image]) return mainJaData[food.image].name;
+
+    if (food.name && legacyViNameMap[food.name]) {
+      return legacyViNameMap[food.name];
+    }
+  }
+  return food.name;
+}
+
+export function foodSubtitle(food: Food, language: Language) {
+  if (language === "ja") {
+    const cat = food.category || "main";
+    if (cat === "drinks" && drinksJaData[food.image]) return drinksJaData[food.image].sub;
+    if (cat === "snacks" && snacksJaData[food.image]) return snacksJaData[food.image].sub;
+    if (cat === "pub" && pubJaData[food.image]) return pubJaData[food.image].sub;
+    if (mainJaData[food.image]) return mainJaData[food.image].sub;
+
+    if (food.sub && legacyViSubMap[food.sub]) {
+      return legacyViSubMap[food.sub];
+    }
+  }
+  if (language === "vi") return food.sub;
+  return food.veg ? copy.en.vegetarianDish : copy.en.lunchDish;
+}
+
+export function foodQuip(food: Food, language: Language) {
+  if (language === "ja") {
+    const cat = food.category || "main";
+    if (cat === "drinks" && drinksJaData[food.image]) return drinksJaData[food.image].quip;
+    if (cat === "snacks" && snacksJaData[food.image]) return snacksJaData[food.image].quip;
+    if (cat === "pub" && pubJaData[food.image]) return pubJaData[food.image].quip;
+    if (mainJaData[food.image]) return mainJaData[food.image].quip;
+
+    if (food.quip && legacyViQuipMap[food.quip]) {
+      return legacyViQuipMap[food.quip];
+    }
+  }
+  return food.quip;
+}
+
+export function priceLabel(
+  price: number | string,
+  language: Language,
+  approximate = false,
+) {
+  const value = Number(price);
+  if (language === "ja") {
+    return `${approximate ? "約" : ""}${new Intl.NumberFormat("ja-JP").format(value)}円`;
+  }
+  const formatted =
+    language === "en"
+      ? `¥${new Intl.NumberFormat("en-US").format(value)}`
+      : `${new Intl.NumberFormat("vi-VN").format(Math.round(value * 160))}đ`;
+  return `${approximate ? "~" : ""}${formatted}`;
+}
+
