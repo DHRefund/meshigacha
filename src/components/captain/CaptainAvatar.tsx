@@ -10,16 +10,11 @@ interface CaptainAvatarProps {
   language?: Language;
 }
 
-const EMOTION_IMAGE_MAP: Record<string, string> = {
-  happy: '/npc/npc_happy.png',
-  serious: '/npc/npc_serious.png',
-  teasing: '/npc/npc_teasing.png',
-  shocked: '/npc/npc_shocked.png',
-};
+const CAPTAIN_AVATAR_IMAGE = '/npc/npc_happy.webp';
 
 export function CaptainAvatar({ bark, language = 'vi' }: CaptainAvatarProps) {
   const currentEmotion = bark.emotion || 'happy';
-  const avatarSrc = EMOTION_IMAGE_MAP[currentEmotion] || '/npc/npc_happy.png';
+  const avatarSrc = CAPTAIN_AVATAR_IMAGE;
   const dialogueText = getBarkText(bark, language);
 
   return (
@@ -51,11 +46,11 @@ export function CaptainAvatar({ bark, language = 'vi' }: CaptainAvatarProps) {
             {language === 'ja'
               ? '助手犬キャプテン (NPC)'
               : language === 'en'
-              ? 'First Class Assistant'
-              : 'Binh Nhất Trợ Lý'}
+                ? 'First Class Assistant'
+                : 'Binh Nhất Trợ Lý'}
           </span>
         </div>
-        
+
         <div className="min-h-[48px] sm:min-h-[56px] flex items-center">
           <p
             key={dialogueText}

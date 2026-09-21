@@ -16,7 +16,7 @@ interface IntroStoryProps {
 }
 
 // CS2 Hangar Armory Background Scene
-const CS2_ARMORY_BG = '/npc/cs2_military_armory_background.png';
+const CS2_ARMORY_BG = '/npc/cs2_military_armory_background.webp';
 
 export function IntroStory({ language = 'ja', onComplete }: IntroStoryProps) {
   const { user } = useAuth();
